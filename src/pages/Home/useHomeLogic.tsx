@@ -28,9 +28,11 @@ export const useHomeLogic = () => {
     const [filteredProducts, setFilteredProducts] = useState<String | Number>();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState<Number>(0);
+    const [modal, setModal] = useState<Boolean>(false);
 
     const handleNextPage = () => page === totalPage ? alert('ostatnia strona') : setPage(page +1)
     const handlePrevPage = () => page === 1 ? alert('pierwsza strona') : setPage(page -1)
+    const handleModal = () => setModal((prevState: Boolean) => !prevState)
 
     useEffect(() => {
         (async () => {
@@ -46,5 +48,5 @@ export const useHomeLogic = () => {
         })()
     }, [page]);
 
-return {products, filteredProducts, setFilteredProducts, handleNextPage, handlePrevPage, }
+return {products, filteredProducts, setFilteredProducts, handleNextPage, handlePrevPage, modal, handleModal}
 }

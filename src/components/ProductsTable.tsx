@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const ProductsTable = ({ filteredProducts, products }:{filteredProducts: any, products: any,}) => {
+const ProductsTable = ({ filteredProducts, products, handleModal }:{filteredProducts: any, products: any, handleModal: any,}) => {
   
   return (
       <>
@@ -25,6 +25,7 @@ const ProductsTable = ({ filteredProducts, products }:{filteredProducts: any, pr
           }).map(({id, name, year}:{id: String, name: String, year: Number}) => (
             <TableRow
               key={id.toString()}
+              onClick={() => handleModal()}
             >
               <TableCell align="left">{id}</TableCell>
               <TableCell align="left">{name}</TableCell>

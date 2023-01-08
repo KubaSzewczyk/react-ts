@@ -11,6 +11,8 @@ const Home = () => {
         setFilteredProducts,
         handleNextPage,
         handlePrevPage,
+        modal,
+        handleModal
     } = useHomeLogic() 
 
     if (!products) {
@@ -27,9 +29,11 @@ const Home = () => {
             <ProductsTable
                 products={products}
                 filteredProducts={filteredProducts}
+                handleModal={handleModal}
             />
             <button onClick={() => handlePrevPage()}>Prev</button>
             <button onClick={() => handleNextPage()}>Next</button>
+            {modal && <Modal />}
         </>
         )
 }
