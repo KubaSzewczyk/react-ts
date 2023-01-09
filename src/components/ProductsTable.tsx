@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +7,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const ProductsTable = ({ filteredProducts, products, handleModal }:{filteredProducts: any, products: any, handleModal: any,}) => {
+import { ProductItem } from '../pages/Home/useHomeLogic';
+
+const StyledTableRow = styled(TableRow)`
+  position: relative;
+  cursor: pointer;
+  background-color: ${({color}) => color};
+`
+export type ProductTableItem = Pick<ProductItem, 'id' | 'name' | 'year' | 'color' | 'pantone_value'>
+interface ProductsTableProps {
+filteredProduct: number, products: ProductItem[], handleModal: (product: ProductTableItem) => void
+}
+
+const ProductsTable = ({ filteredProduct, products, handleModal }: ProductsTableProps) => {
   
   return (
       <>
@@ -20,17 +33,18 @@ const ProductsTable = ({ filteredProducts, products, handleModal }:{filteredProd
           </TableRow>
         </TableHead>
         <TableBody>
-        {products.filter((item: any) => {
-            return !filteredProducts ? item : filteredProducts?.toString().includes(item.id)
-          }).map(({id, name, year}:{id: String, name: String, year: Number}) => (
-            <TableRow
-              key={id.toString()}
-              onClick={() => handleModal()}
+            {products.filter((item: ProductItem) => {              
+            return !filteredProduct ? item : filteredProduct === item.id
+          }).map(({id, name, year, color, pantone_value}:ProductTableItem) => (
+            <StyledTableRow
+              key={id}
+              onClick={() => handleModal(({ id, name, year, color, pantone_value }))}
+              color={color}
             >
               <TableCell align="left">{id}</TableCell>
               <TableCell align="left">{name}</TableCell>
-              <TableCell align="left">{year.toString()}</TableCell>
-            </TableRow>
+              <TableCell align="left">{year}</TableCell>
+            </StyledTableRow>
           ))}
         </TableBody>
         </Table>

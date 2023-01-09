@@ -1,38 +1,43 @@
 import { useState, useEffect } from 'react'
+import { ProductTableItem } from '../../components/ProductsTable'
 
-interface ProductItem{
-color: String
-id: any
-name: String
-pantone_value: String
-year: Number
+export interface ProductItem{
+color: string
+id: number
+name: string
+pantone_value: string
+year: number
 }
 
 interface ResponseData {
 data: ProductItem[]
-page: Number
-per_page: Number
+page: number
+per_page: number
 support: {
-    url: String,
-    text: String
+    url: string,
+    text: string
 } 
-total: Number
-total_pages: Number
+total: number
+total_pages: number
 }
 
 const LIMIT_PER_PAGE = 5
 
 export const useHomeLogic = () => {
 
-    const [products, setProducts] = useState<null | ProductItem[]>(null);
-    const [filteredProducts, setFilteredProducts] = useState<String | Number>();
+    const [products, setProducts] = useState<null | ProductItem[]>();
+    const [filteredProduct, setFilteredProducts] = useState<number>(0);
     const [page, setPage] = useState(1);
-    const [totalPage, setTotalPage] = useState<Number>(0);
-    const [modal, setModal] = useState<Boolean>(false);
-
+    const [totalPage, setTotalPage] = useState<number>(0);
+    const [modal, setModal] = useState<boolean>(false);
+    const [selectedProduct, setSelectedProduct] = useState <ProductItem | null>(null)
+    
     const handleNextPage = () => page === totalPage ? alert('ostatnia strona') : setPage(page +1)
     const handlePrevPage = () => page === 1 ? alert('pierwsza strona') : setPage(page -1)
-    const handleModal = () => setModal((prevState: Boolean) => !prevState)
+    const handleModal = (product: ProductTableItem) => {
+        setModal((prevState: boolean) => !prevState)
+        setSelectedProduct(product)
+    }
 
     useEffect(() => {
         (async () => {
@@ -43,10 +48,21 @@ export const useHomeLogic = () => {
                 setTotalPage(data.total_pages)
                 setProducts(data.data)
             } catch (error) {
-                console.log('Something went wrong', error)
+                console.error('Something went wrong', error)
             }
         })()
     }, [page]);
 
-return {products, filteredProducts, setFilteredProducts, handleNextPage, handlePrevPage, modal, handleModal}
+    return {
+        products,
+        filteredProduct,
+        setFilteredProducts,
+        handleNextPage,
+        handlePrevPage,
+        modal,
+        handleModal,
+        selectedProduct,
+        setSelectedProduct,
+        setModal
+    }
 }
