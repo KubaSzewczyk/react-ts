@@ -1,20 +1,21 @@
 import styled from 'styled-components'
-import { ProductItem } from '../pages/Home/useHomeLogic'
+import { ProductTableItem } from './ProductsTable'
 
 interface ModalProps {
-selectedProduct: any, setModal: any
+    selectedProduct: ProductTableItem,
+    setModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-
 
 const ModalContainer = styled.div`
 position: absolute;
 display: flex;
 flex-direction: column;
-align-items: center;
-width: 200px;
+align-items: flex-start;
+width: 400px;
 height: 250px;
 top: 10%;
 left: 30%;
+padding: 20px;
 border: 1px solid black;
 border-radius: 12px;
 background-color: white;
@@ -37,7 +38,7 @@ const Modal = ({ selectedProduct, setModal }: ModalProps) => {
     
     return (
         <ModalContainer>
-        <CloseButton onClick={() => setModal((prevState: boolean)=> !prevState)}>x</CloseButton>
+        <CloseButton onClick={() => setModal((prevState) => !prevState)}>x</CloseButton>
         <p>id: {id}</p>
         <p>name: {name}</p> 
         <p>color: {color}</p>

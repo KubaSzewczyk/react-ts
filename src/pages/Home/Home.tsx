@@ -24,7 +24,7 @@ const Home = () => {
         selectedProduct, 
         setModal
     } = useHomeLogic()
-
+    
     if (!products) {
     return null
     }
@@ -48,9 +48,9 @@ const Home = () => {
             />
             <button onClick={() => handlePrevPage()}>Prev</button>
             <button onClick={() => handleNextPage()}>Next</button>
-            {modal && <Modal setModal={setModal} selectedProduct={selectedProduct} />}
+            {modal && selectedProduct ? <Modal setModal={setModal} selectedProduct={selectedProduct}/> : null}
         </>
-        )
+    )
 }
 
 export default Home

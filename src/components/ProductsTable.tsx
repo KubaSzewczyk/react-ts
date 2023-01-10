@@ -12,7 +12,10 @@ import { ProductItem } from '../pages/Home/useHomeLogic';
 const StyledTableRow = styled(TableRow)`
   position: relative;
   cursor: pointer;
-  background-color: ${({color}) => color};
+  background-color: ${({ color }) => color};
+  :hover{
+    background-color: white;
+  }
 `
 export type ProductTableItem = Pick<ProductItem, 'id' | 'name' | 'year' | 'color' | 'pantone_value'>
 interface ProductsTableProps {
